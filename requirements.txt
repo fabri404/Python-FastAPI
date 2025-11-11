@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+selenium
+flet
+python-dotenv
+sqlalchemy
+psycopg2-binary
+pydantic
