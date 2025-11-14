@@ -1,5 +1,3 @@
-# app/core/instagram_bot.py
-
 import os
 import time
 from typing import List, Optional
@@ -59,8 +57,8 @@ def crear_driver() -> webdriver.Remote:
     Crea y devuelve una instancia de Chrome conectándose a un ChromeDriver
     que ya está corriendo en http://127.0.0.1:9515
 
-    => ANTES de usar el bot, hay que ejecutar:
-       /usr/local/bin/chromedriver --port=9515
+    ANTES de usar el bot, hay que ejecutar:
+    /usr/local/bin/chromedriver --port=9515
     """
     try:
         options = Options()
@@ -85,7 +83,7 @@ def crear_driver() -> webdriver.Remote:
 
 
 # ===============================
-# Login IG (optimizado)
+# Login IG 
 # ===============================
 
 def login_ig(
@@ -123,6 +121,7 @@ def login_ig(
     entrada_contra.send_keys(password)
     entrada_contra.send_keys(Keys.ENTER)
 
+    time.sleep(2) 
     # Esperar a que la URL ya no sea /accounts/login
     print("[BOT] Esperando a que termine el login...")
     try:
@@ -218,6 +217,8 @@ def obtener_o_crear_thread_id(
     print(f"[BOT] No hay thread en BD, abriendo ig.me: {ig_me_url}")
     driver.get(ig_me_url)
 
+    time.sleep(2)
+
     # Esperar a que IG redirija a /direct/t/<thread_id>/
     try:
         WebDriverWait(driver, timeout).until(
@@ -290,7 +291,7 @@ def enviar_mensajes(
 
         # 2.1) Cerrar popup "Turn on Notifications" si aparece
         cerrar_popup_notificaciones(driver, timeout=15)
-        time.sleep(1)  # pequeña pausa para que se estabilice la vista
+        time.sleep(2)  # pequeña pausa para que se estabilice la vista
 
         # 3) Esperar a que aparezca el área de texto del mensaje
         try:
@@ -322,7 +323,8 @@ def enviar_mensajes(
                     )
                 )
                 driver.execute_script("arguments[0].click();", entrada)
-
+                
+            time.sleep(1)
             entrada.send_keys(texto)
             entrada.send_keys(Keys.ENTER)
             time.sleep(0.5)  # pequeña pausa entre mensajes
